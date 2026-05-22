@@ -1,0 +1,121 @@
+.page {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: calc(100vh - 5rem);
+  padding: var(--space-8) var(--space-4);
+  background: linear-gradient(160deg, var(--bg-surface) 0%, var(--bg-page) 70%);
+}
+
+.card {
+  width: 100%;
+  max-width: 480px;
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-default);
+  border-radius: var(--border-radius-xl);
+  box-shadow: var(--shadow-lg);
+  padding: var(--space-10) var(--space-8);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.brandBar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  margin-bottom: var(--space-2);
+}
+
+.brandIcon {
+  font-size: var(--font-size-2xl);
+  color: var(--color-primary);
+}
+
+.brandName {
+  font-size: var(--font-size-2xl);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-primary);
+}
+
+.title {
+  text-align: center;
+  font-size: var(--font-size-2xl);
+  color: var(--text-primary);
+}
+
+.subtitle {
+  text-align: center;
+  font-size: var(--font-size-sm);
+  color: var(--text-secondary);
+  margin-top: calc(var(--space-1) * -1);
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+  margin-top: var(--space-2);
+}
+
+/* Select customizado */
+.fieldGroup {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.selectLabel {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  color: var(--text-primary);
+}
+
+.select {
+  width: 100%;
+  padding: var(--space-3) var(--space-4);
+  background-color: var(--bg-input);
+  color: var(--text-primary);
+  border: 1.5px solid var(--border-default);
+  border-radius: var(--border-radius-md);
+  font-size: var(--font-size-md);
+  font-family: inherit;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%239B59B6' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right var(--space-4) center;
+  cursor: pointer;
+  transition:
+    border-color var(--transition-fast),
+    box-shadow var(--transition-fast);
+  outline: none;
+}
+
+.select:focus {
+  border-color: var(--border-focus);
+  box-shadow: 0 0 0 3px var(--color-primary-light);
+}
+
+.loginPrompt {
+  text-align: center;
+  font-size: var(--font-size-sm);
+  color: var(--text-secondary);
+  margin-top: var(--space-2);
+}
+
+/* Estado de sucesso */
+.successIcon {
+  font-size: 3rem;
+  text-align: center;
+  display: block;
+}
+
+.apiError {
+  font-size: var(--font-size-sm);
+  color: #EF4444;
+  text-align: center;
+  padding: var(--space-3);
+  background-color: rgba(239, 68, 68, 0.08);
+  border-radius: var(--border-radius-md);
+}

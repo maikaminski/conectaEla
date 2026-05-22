@@ -1,0 +1,31 @@
+# Dependências e build
+node_modules/
+dist/
+build/
+.vite/
+
+# Ambiente
+.env
+.env.local
+.env.*.local
+
+# Logs
+*.log
+npm-debug.log*
+
+# Editor
+.vscode/
+.idea/
+*.suo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# .NET
+bin/
+obj/
+*.user
+*.db
+*.db-shm
+*.db-wal
