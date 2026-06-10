@@ -1,5 +1,5 @@
 # Etapa 1: build
-FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
+FROM --platform=linux/amd64 mcr.microsoft.com/dotnet/sdk:8.0 AS build
 WORKDIR /app
 
 COPY ConectaEla.sln .
@@ -14,7 +14,7 @@ COPY src/ src/
 RUN dotnet publish src/ConectaEla.API/ConectaEla.API.csproj -c Release -o /publish
 
 # Etapa 2: imagem final
-FROM mcr.microsoft.com/dotnet/aspnet:8.0
+FROM --platform=linux/amd64 mcr.microsoft.com/dotnet/aspnet:8.0
 WORKDIR /app
 
 # Diretório para o banco SQLite persistente
