@@ -76,8 +76,16 @@ var app = builder.Build();
 // ── Banco: garantir que as tabelas existam em qualquer ambiente ───────────────
 using (var scope = app.Services.CreateScope())
 {
-    var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
-    db.Database.EnsureCreated();
+    try
+    {
+        var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+        await db.Database.EnsureCreatedAsync();
+    }
+    catch (Exception ex)
+    {
+        var logger = scope.ServiceProvider.GetRequiredService<ILogger<Program>>();
+        logger.LogError(ex, "Falha ao inicializar o banco de dados.");
+    }
 }
 
 // ── Middleware Pipeline ───────────────────────────────────────────────────────
