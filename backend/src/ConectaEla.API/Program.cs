@@ -14,10 +14,10 @@ var builder = WebApplication.CreateBuilder(args);
 
 // ── Banco de Dados ──────────────────────────────────────────────────────────
 var connectionString = builder.Configuration.GetConnectionString("Default")
-    ?? "Data Source=conectaela.db";
+    ?? throw new InvalidOperationException("Connection string 'Default' não configurada.");
 
 builder.Services.AddDbContext<AppDbContext>(opt =>
-    opt.UseSqlite(connectionString));
+    opt.UseNpgsql(connectionString));
 
 // ── Injeção de Dependência (DDD) ─────────────────────────────────────────────
 builder.Services.AddScoped<IUserRepository, UserRepository>();
