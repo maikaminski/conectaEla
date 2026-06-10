@@ -56,16 +56,29 @@ builder.Services.AddSwaggerGen(c =>
     });
 });
 
-// ── CORS: permitir o front-end em desenvolvimento ────────────────────────────
+// ── CORS ─────────────────────────────────────────────────────────────────────
+// Em produção, defina a variável de ambiente CORS_ORIGINS com as URLs separadas por vírgula.
+// Ex: CORS_ORIGINS=https://conectaela.vercel.app,https://meudominio.com
+var corsOrigins = builder.Configuration["CORS_ORIGINS"]
+    ?.Split(',', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries)
+    ?? ["http://localhost:3000"];
+
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("FrontendDev", policy =>
-        policy.WithOrigins("http://localhost:3000")
+    options.AddPolicy("Frontend", policy =>
+        policy.WithOrigins(corsOrigins)
               .AllowAnyHeader()
               .AllowAnyMethod());
 });
 
 var app = builder.Build();
+
+// ── Banco: garantir que as tabelas existam em qualquer ambiente ───────────────
+using (var scope = app.Services.CreateScope())
+{
+    var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+    db.Database.EnsureCreated();
+}
 
 // ── Middleware Pipeline ───────────────────────────────────────────────────────
 app.UseMiddleware<ExceptionHandlingMiddleware>();
@@ -74,15 +87,13 @@ if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
-
-    // Cria o banco automaticamente em desenvolvimento
-    using var scope = app.Services.CreateScope();
-    var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
-    db.Database.EnsureCreated();
 }
 
-app.UseHttpsRedirection();
-app.UseCors("FrontendDev");
+// Não usar HTTPS redirect: em produção o Render faz o termination de HTTPS no proxy.
+if (app.Environment.IsDevelopment())
+    app.UseHttpsRedirection();
+
+app.UseCors("Frontend");
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
