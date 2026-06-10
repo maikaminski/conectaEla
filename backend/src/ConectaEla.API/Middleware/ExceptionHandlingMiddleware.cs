@@ -39,7 +39,8 @@ public sealed class ExceptionHandlingMiddleware
         {
             UnauthorizedAccessException => (HttpStatusCode.Unauthorized, exception.Message),
             KeyNotFoundException        => (HttpStatusCode.NotFound, exception.Message),
-            InvalidOperationException   => (HttpStatusCode.Conflict, exception.Message),
+            InvalidOperationException e when !e.Message.Contains("transient") && !e.Message.Contains("Npgsql") && !e.Message.Contains("database")
+                                        => (HttpStatusCode.Conflict, exception.Message),
             ArgumentException           => (HttpStatusCode.BadRequest, exception.Message),
             _                           => (HttpStatusCode.InternalServerError, "Ocorreu um erro interno. Tente novamente mais tarde.")
         };
